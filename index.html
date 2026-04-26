@@ -2,8 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>How {things} Work — a field guide to the machinery of modern life</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>How {things} Work — a field guide to the machinery of modern life</title>
+<meta name="description" content="A field guide to the machinery of modern life. Short, plainspoken explainers about the everyday objects, systems, and ideas that quietly run the world."/>
+<meta name="theme-color" content="#fcf9f4"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="How {things} Work"/>
+<meta property="og:description" content="A field guide to the machinery of modern life. About 400 topics. Offline. Ad-free. Free forever."/>
+<meta property="og:url" content="https://howthingswork.app/"/>
+<meta property="og:site_name" content="How {things} Work"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="canonical" href="https://howthingswork.app/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='2' y='13' font-family='monospace' font-size='14' fill='%23154212'>{</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="brand.v2.css"/>
 <style>
   /* Landing — minimal / demo-forward.
@@ -112,25 +124,6 @@
     display: flex; align-items: center; gap: 16px;
     flex-wrap: wrap; justify-content: center;
   }
-  .badge.disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    pointer-events: none;
-    position: relative;
-  }
-  .badge.disabled .badge-kicker { opacity: 0.6; }
-  .coming-soon-tag {
-    position: absolute;
-    top: -8px; right: -8px;
-    background: var(--cream-3);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 9px; font-weight: 500;
-    letter-spacing: 1.1px; text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 999px;
-    border: 1px solid var(--hairline-2);
-  }
 
   .subheadline {
     margin-top: 56px;
@@ -173,7 +166,7 @@
     </a>
     <div class="nav-links">
       <a href="release-notes.html">Release notes</a>
-      <a href="who-we-are.html">Who we are</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -182,6 +175,8 @@
     <a href="#download" class="btn btn-ink">Get the app</a>
   </div>
 </nav>
+
+<main>
 
 <!-- ═════ Hero ═════ -->
 <section class="stage" id="download">
@@ -229,59 +224,25 @@
 
 </section>
 
-<!-- ═════ Footer ═════ -->
-<!--FOOTER-->
-<footer class="ft">
-  <div class="ft-inner">
-    <div class="ft-top">
-      <div class="ft-news">
-        <h3>One explainer a week.</h3>
-        <p>A quiet newsletter — one topic, plainly explained, every Sunday. Unsubscribe in one tap.</p>
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed ✓';">
-          <input type="email" placeholder="you@somewhere.com" required/>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-      <div class="ft-col"><h4>Product</h4><ul>
-        <li><a href="#ios">Download iOS</a></li>
-        <li><a aria-disabled="true" style="color: var(--ink-faint); cursor: not-allowed;">Download Android <span style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7;">· soon</span></a></li>
-        <li><a href="release-notes.html">Release notes</a></li>
-      </ul></div>
-      <div class="ft-col"><h4>About</h4><ul>
-        <li><a href="who-we-are.html">Who we are</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="privacy-terms.html">Privacy &amp; terms</a></li>
-      </ul></div>
-    </div>
-    <div class="ft-bottom">
-      <span class="wm mono-ink"><span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span></span>
-      <div style="display:flex;align-items:center;gap:20px;">
-        <span>© 2026 · howthingswork.app</span>
-        <div class="ft-socials">
-          <a aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.5 8.6L23 21h-6.8l-5.3-6.8L4.6 21H1.5l8-9.2L1 3h7l4.8 6.3L18.9 3zm-1.2 16h1.7L6.4 4.9H4.6z"/></svg></a>
-          <a aria-label="RSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a16 16 0 0116 16h-3a13 13 0 00-13-13V3zm0 6a10 10 0 0110 10h-3a7 7 0 00-7-7V9zm2 7a2 2 0 110 4 2 2 0 010-4z"/></svg></a>
-          <a aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-<!--/FOOTER-->
+</main>
+
+<footer class="ft" data-site-footer></footer>
+<script src="site.js" defer></script>
 
 <script>
   const TOPICS = [
-    { word: 'microwaves',   phrase: 'how microwaves heat your food',           cat: 'home',      name: 'Home & Kitchen' },
-    { word: 'wi-fi',        phrase: 'how Wi-Fi reaches your laptop',           cat: 'connect',   name: 'Connectivity' },
-    { word: 'jet engines',  phrase: 'how jet engines keep a plane in the air',cat: 'transport', name: 'Transport' },
-    { word: 'solar panels', phrase: 'how solar panels turn light into power', cat: 'energy',    name: 'Energy' },
-    { word: 'satellites',   phrase: 'how satellites stay in orbit',           cat: 'comm',      name: 'Communication' },
-    { word: 'gravity',      phrase: 'why gravity pulls things down',          cat: 'science',   name: 'Science' },
-    { word: 'MRI scanners', phrase: 'how an MRI scanner sees inside you',     cat: 'medicine',  name: 'Medicine' },
+    { word: 'microwaves',   phrase: 'how microwaves heat your food',            cat: 'home',      name: 'Home & Kitchen' },
+    { word: 'wi-fi',        phrase: 'how Wi-Fi reaches your laptop',            cat: 'connect',   name: 'Connectivity' },
+    { word: 'jet engines',  phrase: 'how jet engines keep a plane in the air',  cat: 'transport', name: 'Transport' },
+    { word: 'solar panels', phrase: 'how solar panels turn light into power',   cat: 'energy',    name: 'Energy' },
+    { word: 'satellites',   phrase: 'how satellites stay in orbit',             cat: 'comm',      name: 'Communication' },
+    { word: 'gravity',      phrase: 'why gravity pulls things down',            cat: 'science',   name: 'Science' },
+    { word: 'MRI scanners', phrase: 'how an MRI scanner sees inside you',       cat: 'medicine',  name: 'Medicine' },
   ];
-  const catHex = {
-    home:'#B06640', connect:'#35707A', transport:'#8E4838',
-    energy:'#B88D2A', comm:'#6B4E71', science:'#154212', medicine:'#9A4558',
-  };
+
+  const CYCLE_MS = 2400;
+  const rootStyles = getComputedStyle(document.documentElement);
+  const colorFor = cat => rootStyles.getPropertyValue(`--cat-${cat}`).trim();
 
   const hero = document.getElementById('hero');
   const slot = document.getElementById('slot');
@@ -290,43 +251,46 @@
   const footLabel = document.getElementById('foot-label');
   const dotsWrap = document.getElementById('dots');
 
-  TOPICS.forEach((t, i) => {
+  const dots = TOPICS.map((t, i) => {
     const d = document.createElement('span');
     d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.style.setProperty('--cat', catHex[t.cat]);
+    d.style.setProperty('--cat', colorFor(t.cat));
+    d.addEventListener('click', () => { select(i); restart(); });
     dotsWrap.appendChild(d);
+    return d;
   });
-  const dots = [...dotsWrap.children];
 
-  let idx = 0;
   function apply(i) {
     const t = TOPICS[i];
-    const c = catHex[t.cat];
+    const c = colorFor(t.cat);
     document.body.style.setProperty('--cat', c);
     hero.style.setProperty('--cat', c);
     captionWord.style.setProperty('--cat', c);
-    hero.querySelectorAll('.slot, .brace').forEach(n => { n.style.color = c; });
-    captionWord.style.color = 'var(--ink)';
-    captionWord.style.backgroundImage = `linear-gradient(${c}, ${c})`;
     footDot.style.background = c;
     slot.textContent = t.word;
     captionWord.textContent = t.phrase;
     footLabel.textContent = t.name;
     dots.forEach((d, j) => d.classList.toggle('active', j === i));
     hero.querySelectorAll('.slot, .brace').forEach(n => {
-      try { n.animate([{opacity: 0.4}, {opacity: 1}], {duration: 260, easing: 'ease-out'}); } catch(e) {}
+      n.animate([{opacity: 0.4}, {opacity: 1}], {duration: 260, easing: 'ease-out'});
     });
   }
 
+  let idx = 0;
+  let timer = null;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function select(i) { idx = i; apply(idx); }
+  function tick() { select((idx + 1) % TOPICS.length); }
+  function start() { if (!reduceMotion && !timer) timer = setInterval(tick, CYCLE_MS); }
+  function stop() { clearInterval(timer); timer = null; }
+  function restart() { stop(); start(); }
+
   apply(0);
-  let timer = setInterval(() => { idx = (idx + 1) % TOPICS.length; apply(idx); }, 2400);
-  dots.forEach((d, i) => {
-    d.addEventListener('click', () => {
-      clearInterval(timer);
-      idx = i;
-      apply(idx);
-      timer = setInterval(() => { idx = (idx + 1) % TOPICS.length; apply(idx); }, 2400);
-    });
+  start();
+
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : start();
   });
 </script>
 

@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About — How {things} Work</title>
+<meta name="description" content="A solo project by Colin Burns. An honest account of building production software with AI as a co-author — what's exciting about it, and what's complicated about it."/>
+<meta name="theme-color" content="#fcf9f4"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="About — How {things} Work"/>
+<meta property="og:description" content="A solo project. An honest account of building production software with AI as a co-author."/>
+<meta property="og:url" content="https://howthingswork.app/about.html"/>
+<meta property="og:site_name" content="How {things} Work"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="canonical" href="https://howthingswork.app/about.html"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='2' y='13' font-family='monospace' font-size='14' fill='%23154212'>{</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="brand.v2.css"/>
+<style>
+  /* About-page bits */
+  .stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 32px 0 8px;
+    border-top: 1px solid var(--hairline-2);
+  }
+  .stack-item {
+    padding: 24px 32px 24px 0;
+    border-bottom: 1px solid var(--hairline);
+    border-right: 1px solid var(--hairline);
+  }
+  .stack-item:nth-child(2n) { padding-right: 0; padding-left: 32px; border-right: none; }
+  .stack-item:nth-last-child(-n+2) { border-bottom: none; }
+  .stack-item .label {
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .stack-item h4 {
+    font-family: var(--serif);
+    font-size: 19px; font-weight: 500;
+    letter-spacing: -0.2px;
+    margin: 0 0 6px;
+  }
+  .stack-item p {
+    font-size: 14px; line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0; text-wrap: pretty;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 36px 0 12px;
+    border-top: 1px solid var(--hairline-2);
+    border-bottom: 1px solid var(--hairline-2);
+  }
+  .stat {
+    padding: 22px 24px 22px 0;
+    border-right: 1px solid var(--hairline);
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num {
+    font-family: var(--serif);
+    font-size: 36px; font-weight: 400;
+    letter-spacing: -0.6px;
+    line-height: 1;
+    margin: 0 0 6px;
+  }
+  .stat .num em { font-style: italic; font-weight: 500; color: var(--green); }
+  .stat .label {
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .pull {
+    margin: 32px 0;
+    padding: 24px 0 24px 28px;
+    border-left: 3px solid var(--green);
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  /* Diagram blocks (funnel · coda · deployment) */
+  .diagram-block { margin: 28px 0 56px; }
+  .diagram-label {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--hairline);
+    gap: 16px; flex-wrap: wrap;
+  }
+  .diagram-num {
+    font-family: var(--mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 1.6px; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .diagram-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .diagram-svg { display: block; width: 100%; height: auto; margin: 0 auto; }
+  .diagram-note {
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    margin: 22px 0 0;
+    font-style: italic;
+    text-wrap: pretty;
+  }
+  .diagram-note strong { font-style: normal; font-weight: 500; color: var(--ink); }
+  .coda { margin-top: 8px; }
+  .coda .diagram-svg { max-width: 640px; }
+
+  /* SVG-internal classes (referenced from inline SVG below) */
+  .d-card { fill: #f4ede0; }
+  .d-card-2 { fill: #efe6d4; }
+  .d-card-3 { fill: #e9dcc1; }
+  .d-card-warm { fill: #e8dcc0; }
+  .d-soft-shadow { filter: drop-shadow(0 6px 14px rgba(60, 50, 30, 0.08)); }
+  .d-ink { fill: #1c1c19; }
+  .d-ink-soft { fill: #5a5a55; }
+  .d-ink-muted { fill: #8a8478; }
+  .d-green { fill: #154212; }
+  .d-green-stroke { stroke: #154212; }
+  .d-ink-stroke { stroke: #1c1c19; }
+  .d-soft-stroke { stroke: #5a5a55; }
+  .d-mute-stroke { stroke: #b8af9d; }
+  .d-display { font-family: var(--serif); }
+  .d-mono { font-family: var(--mono); }
+  .d-sans { font-family: var(--sans); }
+
+  @media (max-width: 720px) {
+    .stack { grid-template-columns: 1fr; }
+    .stack-item, .stack-item:nth-child(2n) { padding: 20px 0; border-right: none; }
+    .stat-row { grid-template-columns: 1fr; }
+    .stat { padding: 20px 0; border-right: none; border-bottom: 1px solid var(--hairline); }
+    .stat:last-child { border-bottom: none; }
+    .pull { font-size: 19px; padding-left: 20px; }
+    .diagram-name { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="index.html" class="wm" aria-label="Home">
+      <span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span>
+    </a>
+    <div class="nav-links">
+      <a href="release-notes.html">Release notes</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="free-pill">Free forever</span>
+    <a href="index.html#download" class="btn btn-ink">Get the app</a>
+  </div>
+</nav>
+
+<main>
+<section class="page">
+  <div class="page-eyebrow">About · Why it exists · 25 April 2026</div>
+  <h1 class="page-title">A solo project, shipped in a fortnight, on a stack that <em>shouldn't</em> have been possible.</h1>
+  <p class="page-lede">
+    How {things} Work is a one-person project. I'm Colin Burns, a software engineer based in
+    Melbourne. I built this app over two weekends — about twenty hours of focused work — and
+    the result is what you'd normally expect from a small team running for a quarter. An iOS
+    app, two backend services, a content pipeline, self-hosted infrastructure, full CI/CD.
+    Twelve months ago this would have been an ambitious year-long side project. Six months ago,
+    a tough quarter. Today: two weekends.
+  </p>
+
+  <h2>The honest motivation</h2>
+  <p>
+    There used to be a moat around the industry. Building anything substantial — a real
+    application, with a backend, a database, a deployment pipeline, a mobile app, a content
+    system — was hard, and the difficulty was the reason the work was paid the way it was.
+    Years of experience went into knowing which patterns to reach for, which mistakes to avoid,
+    and how all the pieces fit together.
+  </p>
+  <p>
+    That moat is shrinking, and that turns out to be the most exciting thing to happen to
+    software in my career. The constraints I grew up with — the tedious month of boilerplate
+    before you got to the interesting work, the sheer typing tax of building something
+    end-to-end — those are dissolving. What's left is the part I always liked: deciding what
+    to build, deciding how it should be put together, deciding where the failure modes hide.
+  </p>
+  <p>
+    I won't pretend it's not also unsettling. Every software engineer I know is feeling some
+    version of the same conflict: <em>I can ship things I never could before</em>, sitting
+    awkwardly next to <em>and what does that mean for the way I make a living?</em> Both are
+    true. Both are worth taking seriously. This project was, partly, my way of looking at the
+    conflict directly instead of around it.
+  </p>
+
+  <h2>Why a "how things work" app</h2>
+  <p>
+    The premise comes from a science-fiction trope I've always loved. Someone travels back in
+    time and finds they can <em>name</em> the things from the future — microwave, satellite,
+    insulin — but can't actually <em>explain</em> any of them. The mechanics are gone the
+    moment they leave their century.
+  </p>
+  <p>
+    I wanted a tool for that. A pocket reference for the everyday machinery of modern life,
+    written plainly, short enough to read in a queue, working offline. Not a survival manual,
+    not prepper content — I wanted curiosity, well-served, not a doomsday framing. And honestly,
+    I also wanted an excuse to learn iOS development properly. New platform, real project, no
+    tutorials.
+  </p>
+
+  <div class="pull">
+    Twelve months ago this would have been a year-long side project. Today: two weekends.
+  </div>
+
+  <h2>How it actually got built</h2>
+  <p>
+    The structure of the work was driven by a product requirements document. I didn't type
+    the PRD any more than I typed the code — I coordinated its development through
+    conversation with the AI, the same way I coordinated the development of everything else.
+    Treating the document as "real work I did" while treating the code as "the AI's work"
+    would have been a strange line to draw.
+  </p>
+  <p>
+    From the PRD, <a class="inline" href="https://www.task-master.dev" target="_blank" rel="noopener">Taskmaster</a>
+    broke the work down into discrete, ordered tasks with dependencies. <strong>Claude Code</strong>
+    then picked up tasks one at a time, wrote the implementations, and handed each piece back for
+    review. My job was architecture, judgement calls, security review, and saying "no, that's not
+    the trade-off I want."
+  </p>
+  <p>
+    The design followed the same pattern. I'm not a designer. I think I can tell good design
+    from bad, but I can't produce good design from a blank page — there's a real difference
+    between recognising taste and having the hands to express it. Halfway through the project,
+    Claude Design was released, and that gave me the missing third of the team.
+  </p>
+  <p>
+    The app's visual system started as a brief I worked out in a Claude conversation: an
+    "academic atelier" direction, warm and editorial, deliberately rejecting both sterile
+    EdTech and gamified cartoonishness. I iterated on screens with Claude Design until the
+    look felt right. For this marketing site, I asked it for eight variations against the
+    app's visual language; this is the one I picked. A few of the others looked more
+    aggressively editorial — newspaper-like, dense — but they came with hallucinated copy I'd
+    have had to audit and rewrite end-to-end. This one wore its constraints more gently.
+  </p>
+
+  <h2>The stack</h2>
+  <div class="stack">
+    <div class="stack-item">
+      <div class="label">Mobile</div>
+      <h4>iOS app (React Native)</h4>
+      <p>Built with Expo and React Native, offline-first via SQLite. Targeting iOS for now; Android falls out cheaply when I'm ready. The first mobile app I've shipped.</p>
+    </div>
+    <div class="stack-item">
+      <div class="label">Backend</div>
+      <h4>API + content pipeline</h4>
+      <p>Two services: a Fastify API serving the app, and a content pipeline that drafts, edits, and ships explainers using LLMs with a retrieval layer.</p>
+    </div>
+    <div class="stack-item">
+      <div class="label">Infrastructure</div>
+      <h4>Self-hosted, end-to-end</h4>
+      <p>Terraform-provisioned droplet, self-hosted Postgres and Redis, DO Spaces with a CDN for images. Tailscale for everything administrative.</p>
+    </div>
+    <div class="stack-item">
+      <div class="label">Delivery</div>
+      <h4>Custom CI/CD</h4>
+      <p>A self-hosted GitHub Actions runner on a NAS at home, pushing images to a private container registry. Portainer manages deploys to the droplet via an Edge Agent.</p>
+    </div>
+  </div>
+
+  <h2>What this actually felt like</h2>
+  <p>
+    The honest verdict: extraordinary, with footnotes. The AI did not replace the engineering
+    — architecture, storage strategy, security model, deployment topology, the dozens of
+    little judgement calls that decide whether a system holds up under load — those were
+    decisions a human still has to make, and the AI was wrong often enough that you notice.
+    What it replaced, almost completely, was the <em>typing</em>. The line-by-line grind.
+    Afternoons that used to disappear into boilerplate now compress into review sessions.
+  </p>
+  <p>
+    The moat hasn't disappeared. It's moved. Scott Werner has a wonderful piece called
+    <a class="inline" href="https://nearzero.software/p/warranty-void-if-regenerated" target="_blank" rel="noopener">Warranty Void If Regenerated</a>
+    that imagines what software work looks like a few years into this transition: a country
+    mechanic, working out of a corrugated steel shop, diagnosing the gap between what farmers
+    specified and what their generated tools actually do. The skill that pays the bills isn't
+    typing code. It's reading specs against reality, choreographing how generated tools
+    interact, and translating the kind of knowledge that lives in someone's hands into
+    language a machine can act on. It's a piece of fiction, but it doesn't feel far off.
+  </p>
+  <p>
+    That's roughly what building this app felt like, in miniature. The leverage is real. The
+    work just looks different now.
+  </p>
+
+  <h2>How a topic gets made</h2>
+
+  <section class="diagram-block">
+    <div class="diagram-label">
+      <span class="diagram-num">The pipeline</span>
+      <span class="diagram-name">Many sources in, one topic out</span>
+    </div>
+
+    <svg class="diagram-svg" viewBox="0 0 900 1060" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pb-title">
+      <title id="pb-title">Funnel content pipeline: many sources converge through Evaluate, fan out through grounded generation</title>
+      <defs>
+        <marker id="pb-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
+        </marker>
+        <marker id="pb-arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#154212"/>
+        </marker>
+        <marker id="pb-arr-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b8af9d"/>
+        </marker>
+      </defs>
+
+      <g transform="translate(450, 56)">
+        <text x="0" y="0" text-anchor="middle" class="d-mono d-ink-muted" font-size="10" letter-spacing="1.6">TOPIC NAME IN</text>
+        <text x="0" y="34" text-anchor="middle" class="d-display d-ink" font-size="24" font-style="italic" font-weight="500">"How does a microwave work?"</text>
+      </g>
+
+      <path d="M450,108 C450,128 450,140 450,150" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#pb-arr)"/>
+
+      <g transform="translate(360, 156)">
+        <rect width="180" height="56" rx="10" class="d-card-2"/>
+        <text x="16" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">01</text>
+        <text x="16" y="42" class="d-sans d-ink" font-size="14" font-weight="500">Discover</text>
+        <text x="90" y="22" class="d-sans d-ink-soft" font-size="10" text-anchor="end">candidate URLs</text>
+      </g>
+      <text x="560" y="180" class="d-display d-ink-soft" font-size="13" font-style="italic" font-weight="500">searches the open web</text>
+
+      <g class="d-mute-stroke" stroke-width="1" fill="none" opacity="0.85">
+        <path d="M450,212 C300,240 200,260 140,288"/>
+        <path d="M450,212 C320,250 250,280 220,318"/>
+        <path d="M450,212 C400,260 380,290 380,320"/>
+        <path d="M450,212 C500,260 520,290 520,320"/>
+        <path d="M450,212 C580,250 650,280 680,318"/>
+        <path d="M450,212 C600,240 700,260 760,288"/>
+      </g>
+
+      <g transform="translate(40, 290)">
+        <rect x="0" y="0" width="80" height="36" rx="6" class="d-card"/>
+        <text x="40" y="26" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="100" y="6" width="100" height="36" rx="6" class="d-card"/>
+        <text x="150" y="32" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="220" y="-4" width="84" height="36" rx="6" class="d-card"/>
+        <text x="262" y="22" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="324" y="4" width="120" height="36" rx="6" class="d-card"/>
+        <text x="384" y="30" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="464" y="-2" width="92" height="36" rx="6" class="d-card"/>
+        <text x="510" y="24" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="576" y="6" width="106" height="36" rx="6" class="d-card"/>
+        <text x="629" y="32" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+        <rect x="702" y="-4" width="116" height="36" rx="6" class="d-card"/>
+        <text x="760" y="22" text-anchor="middle" class="d-display d-ink-soft" font-size="20" font-weight="500">*</text>
+      </g>
+
+      <text x="60" y="358" class="d-display d-ink-soft" font-size="12" font-style="italic" font-weight="500">fetched, then extracted to clean text · 02 · 03</text>
+
+      <g class="d-mute-stroke" stroke-width="1" fill="none" opacity="0.85">
+        <path d="M100,330 C160,380 350,400 430,430"/>
+        <path d="M210,338 C260,388 380,408 440,430"/>
+        <path d="M340,328 C370,380 420,400 446,430"/>
+        <path d="M480,338 C470,388 458,410 458,430"/>
+        <path d="M620,332 C540,380 480,408 466,430"/>
+        <path d="M758,336 C660,386 540,408 472,430"/>
+      </g>
+
+      <g>
+        <rect x="316" y="430" width="268" height="100" rx="14" class="d-card-warm d-soft-shadow"/>
+        <text x="334" y="454" class="d-mono d-green" font-size="10" letter-spacing="1.6" font-weight="500">04 · THE GATE</text>
+        <text x="334" y="482" class="d-display d-green" font-size="22" font-style="italic" font-weight="500">Evaluate</text>
+        <text x="334" y="504" class="d-sans d-ink-soft" font-size="11">LLM scores 0–1 · &lt;0.3 reject · &gt;0.6 keep</text>
+      </g>
+
+      <path d="M316,500 C260,506 220,504 200,498" fill="none" class="d-mute-stroke" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#pb-arr-mute)"/>
+      <text x="124" y="494" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">REJECTED</text>
+
+      <path d="M450,532 C450,556 450,572 450,584" fill="none" class="d-green-stroke" stroke-width="1.6" marker-end="url(#pb-arr-green)"/>
+      <text x="460" y="566" class="d-mono d-green" font-size="9" letter-spacing="0.6" font-weight="500">ACCEPTED</text>
+
+      <g>
+        <rect x="290" y="586" width="320" height="56" rx="10" class="d-card-2"/>
+        <g transform="translate(310, 600)">
+          <text x="0" y="14" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">05 · 06</text>
+          <text x="0" y="34" class="d-sans d-ink" font-size="14" font-weight="500">Chunk &amp; Embed</text>
+        </g>
+        <text x="436" y="616" class="d-sans d-ink-soft" font-size="11">token-aware splits</text>
+        <text x="436" y="630" class="d-sans d-ink-soft" font-size="11">→ vectors per chunk</text>
+      </g>
+
+      <path d="M450,644 C450,664 450,672 450,684" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#pb-arr)"/>
+
+      <g transform="translate(330, 686)">
+        <ellipse cx="120" cy="14" rx="120" ry="14" class="d-card-2"/>
+        <rect x="0" y="14" width="240" height="60" class="d-card-2"/>
+        <ellipse cx="120" cy="74" rx="120" ry="14" class="d-card-3"/>
+        <path d="M0,32 A 120 14 0 0 0 240 32" fill="none" class="d-mute-stroke" stroke-width="0.8" opacity="0.6"/>
+        <path d="M0,52 A 120 14 0 0 0 240 52" fill="none" class="d-mute-stroke" stroke-width="0.8" opacity="0.6"/>
+        <text x="120" y="48" text-anchor="middle" class="d-display d-ink" font-size="18" font-weight="500">vector store</text>
+        <text x="120" y="64" text-anchor="middle" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">grounded retrieval lives here</text>
+      </g>
+
+      <path d="M380,760 C380,810 110,820 110,862" fill="none" class="d-green-stroke" stroke-width="1.4" marker-end="url(#pb-arr-green)"/>
+      <path d="M420,760 C420,810 270,820 270,862" fill="none" class="d-green-stroke" stroke-width="1.4" marker-end="url(#pb-arr-green)"/>
+      <path d="M480,760 C480,810 430,820 430,862" fill="none" class="d-green-stroke" stroke-width="1.4" marker-end="url(#pb-arr-green)"/>
+      <path d="M520,760 C520,810 750,820 750,862" fill="none" class="d-green-stroke" stroke-width="1.4" marker-end="url(#pb-arr-green)"/>
+      <text x="450" y="800" text-anchor="middle" class="d-mono d-green" font-size="9" letter-spacing="0.6" font-weight="500">SIMILARITY SEARCH · TOP-K</text>
+
+      <g transform="translate(40, 866)">
+        <rect width="140" height="64" rx="10" class="d-card-2"/>
+        <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">07</text>
+        <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Pregenerate</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">ELI5 · Go Deeper</text>
+      </g>
+      <g transform="translate(200, 866)">
+        <rect width="140" height="64" rx="10" class="d-card-2"/>
+        <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">08</text>
+        <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Fullgen</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">Full Picture</text>
+      </g>
+      <g transform="translate(360, 866)">
+        <rect width="140" height="64" rx="10" class="d-card-2"/>
+        <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">09</text>
+        <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Quizgen</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">4 questions</text>
+      </g>
+      <g transform="translate(520, 866)">
+        <rect width="140" height="64" rx="10" class="d-card"/>
+        <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">10</text>
+        <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Imagegen</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">→ CDN bucket</text>
+      </g>
+      <g transform="translate(680, 866)">
+        <rect width="140" height="64" rx="10" class="d-card-2"/>
+        <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">11</text>
+        <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Related</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">cross-category</text>
+      </g>
+
+      <g transform="translate(450, 996)" text-anchor="middle">
+        <text x="0" y="0" class="d-display d-ink" font-size="16" font-style="italic" font-weight="500">one grounded explainer out.</text>
+      </g>
+      <g transform="translate(450, 1024)" text-anchor="middle" class="d-sans d-ink">
+        <text x="0" y="0" font-size="12" letter-spacing="0.2" class="d-ink-soft">
+          <tspan>ELI5 + Go Deeper</tspan>
+          <tspan dx="14" class="d-ink-muted">·</tspan>
+          <tspan dx="14">Full Picture</tspan>
+          <tspan dx="14" class="d-ink-muted">·</tspan>
+          <tspan dx="14">Quiz</tspan>
+          <tspan dx="14" class="d-ink-muted">·</tspan>
+          <tspan dx="14">Hero image</tspan>
+          <tspan dx="14" class="d-ink-muted">·</tspan>
+          <tspan dx="14">Related</tspan>
+        </text>
+      </g>
+    </svg>
+
+    <p class="diagram-note">
+      <strong>Reads top to bottom.</strong> A wide field of candidate
+      sources converges through Evaluate (the throat); survivors are
+      chunked, embedded, and pooled in the vector store at the waist;
+      five sibling stages fan back out below it. Four pull grounding
+      back from the well in green; Imagegen sits in the row but
+      doesn't retrieve — it's grounded by the topic name itself.
+    </p>
+  </section>
+
+  <section class="diagram-block coda">
+    <div class="diagram-label">
+      <span class="diagram-num">Coda · And then…</span>
+      <span class="diagram-name">From pipeline output to reader's pocket</span>
+    </div>
+
+    <svg class="diagram-svg" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pc-title">
+      <title id="pc-title">Coda: Postgres to Fastify API to mobile app, with Spaces CDN serving images</title>
+      <defs>
+        <marker id="pc-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
+        </marker>
+        <marker id="pc-arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#154212"/>
+        </marker>
+      </defs>
+
+      <text x="360" y="32" text-anchor="middle" class="d-display d-ink-soft" font-size="15" font-style="italic" font-weight="500">and then the app reads it.</text>
+
+      <g transform="translate(40, 100)">
+        <rect width="160" height="80" rx="12" class="d-card-2"/>
+        <text x="16" y="26" class="d-display d-ink" font-size="16" font-weight="500">Postgres</text>
+        <text x="16" y="46" class="d-sans d-ink-soft" font-size="10.5">topic content,</text>
+        <text x="16" y="60" class="d-sans d-ink-soft" font-size="10.5">embeddings, quiz, links</text>
+        <text x="16" y="76" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">PIPELINE WRITES HERE</text>
+      </g>
+
+      <path d="M204,140 C232,140 250,140 268,140" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#pc-arr)"/>
+
+      <g transform="translate(272, 100)">
+        <rect width="170" height="80" rx="12" class="d-card-2"/>
+        <text x="16" y="26" class="d-display d-ink" font-size="16" font-weight="500">Fastify API</text>
+        <text x="16" y="46" class="d-sans d-ink-soft" font-size="10.5">reads from Postgres,</text>
+        <text x="16" y="60" class="d-sans d-ink-soft" font-size="10.5">serves the app</text>
+        <text x="16" y="76" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">DIGITALOCEAN DROPLET</text>
+      </g>
+
+      <path d="M446,140 C480,140 502,140 520,140" fill="none" class="d-green-stroke" stroke-width="1.6" marker-end="url(#pc-arr-green)"/>
+      <text x="478" y="132" text-anchor="middle" class="d-mono d-green" font-size="9" letter-spacing="0.6" font-weight="500">JSON</text>
+
+      <g transform="translate(528, 92)">
+        <rect width="56" height="96" rx="10" fill="none" class="d-ink-stroke" stroke-width="1.6"/>
+        <line x1="22" y1="80" x2="34" y2="80" class="d-ink-stroke" stroke-width="1.6" stroke-linecap="round"/>
+        <text x="68" y="36" class="d-display d-ink" font-size="14" font-style="italic" font-weight="500">readers</text>
+        <text x="68" y="54" class="d-sans d-ink-soft" font-size="10.5">on demand,</text>
+        <text x="68" y="68" class="d-sans d-ink-soft" font-size="10.5">cached offline</text>
+      </g>
+
+      <g transform="translate(272, 210)">
+        <rect width="170" height="48" rx="10" class="d-card"/>
+        <text x="16" y="20" class="d-display d-ink" font-size="13" font-weight="500">Spaces CDN</text>
+        <text x="16" y="38" class="d-sans d-ink-soft" font-size="10">images · globally cached</text>
+      </g>
+
+      <path d="M446,234 C520,234 540,200 552,192" fill="none" class="d-soft-stroke" stroke-width="1.3" stroke-dasharray="2 3" marker-end="url(#pc-arr)"/>
+      <text x="494" y="222" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">images</text>
+    </svg>
+
+    <p class="diagram-note">
+      <strong>A coda, not a diagram.</strong> Three steps in a line —
+      the pipeline writes to Postgres, the API reads from Postgres, the
+      app reads from the API — with Spaces CDN as the small offshoot
+      supplying images directly to the phone. Same legend as the hero
+      above: green is dynamic API traffic, soft dashed is image content.
+    </p>
+  </section>
+
+  <h2>How it gets deployed</h2>
+
+  <section class="diagram-block">
+    <div class="diagram-label">
+      <span class="diagram-num">Vertical flow</span>
+      <span class="diagram-name">From the stairs to the world</span>
+    </div>
+
+    <svg class="diagram-svg" viewBox="0 0 800 880" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="d2-title">
+      <title id="d2-title">Vertical architecture: home zone above, cloud zone below, users at the bottom</title>
+      <defs>
+        <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
+        </marker>
+        <marker id="arrow2-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#154212"/>
+        </marker>
+      </defs>
+
+      <rect x="80" y="40" width="640" height="340" rx="18" class="d-card" opacity="0.55"/>
+      <text x="100" y="68" class="d-mono d-ink-muted" font-size="10.5" letter-spacing="1.6">HOME · MELBOURNE</text>
+
+      <g transform="translate(660, 50)">
+        <path d="M0,18 L14,4 L28,18 L28,30 L0,30 Z" fill="none" class="d-soft-stroke" stroke-width="1.3" stroke-linejoin="round"/>
+      </g>
+
+      <g transform="translate(118, 92)">
+        <path d="M0,40 L80,40 L74,4 L6,4 Z" fill="none" class="d-ink-stroke" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M-6,40 L86,40 L80,52 L0,52 Z" fill="none" class="d-ink-stroke" stroke-width="1.6" stroke-linejoin="round"/>
+        <text x="110" y="-6" class="d-display d-ink" font-size="18" font-weight="500" font-style="italic">developer</text>
+        <text x="110" y="14" class="d-mono d-ink-muted" font-size="10" letter-spacing="0.6">git push origin api-v0.1.6</text>
+      </g>
+
+      <path d="M260,118 C320,118 360,118 400,118" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#arrow2)"/>
+
+      <g transform="translate(410, 92)">
+        <rect width="160" height="56" rx="10" class="d-card-2"/>
+        <text x="80" y="26" text-anchor="middle" class="d-display d-ink" font-size="18" font-weight="500">GitHub</text>
+        <text x="80" y="44" text-anchor="middle" class="d-sans d-ink-soft" font-size="10.5">tagged release · triggers build</text>
+      </g>
+
+      <path d="M490,150 C490,180 320,180 320,210" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#arrow2)"/>
+      <text x="380" y="180" class="d-mono d-ink-muted" font-size="9.5" letter-spacing="0.6">webhook</text>
+
+      <g transform="translate(140, 220)">
+        <rect x="0" y="0" width="520" height="140" rx="12" class="d-card-2"/>
+        <text x="20" y="30" class="d-display d-ink" font-size="20" font-weight="500">Home NAS</text>
+        <text x="20" y="48" class="d-mono d-ink-muted" font-size="10" letter-spacing="0.6">SYNOLOGY DS923+ · UNDER THE STAIRS</text>
+
+        <rect x="20" y="64" width="220" height="56" rx="8" class="d-card-3"/>
+        <text x="130" y="86" text-anchor="middle" class="d-sans d-ink" font-size="13" font-weight="500">Actions runner</text>
+        <text x="130" y="104" text-anchor="middle" class="d-sans d-ink-soft" font-size="10.5">picks up the job · builds Docker</text>
+
+        <rect x="280" y="64" width="220" height="56" rx="8" class="d-card-3"/>
+        <text x="390" y="86" text-anchor="middle" class="d-sans d-ink" font-size="13" font-weight="500">Private registry</text>
+        <text x="390" y="104" text-anchor="middle" class="d-sans d-ink-soft" font-size="10.5">images stay on the NAS</text>
+
+        <path d="M242,92 L278,92" fill="none" class="d-mute-stroke" stroke-width="1.4" marker-end="url(#arrow2)"/>
+      </g>
+
+      <g>
+        <text x="140" y="428" class="d-mono d-ink-muted" font-size="10" letter-spacing="1.6">— PRIVATE NETWORK —</text>
+        <path d="M400,380 C380,420 420,440 400,470" fill="none" class="d-green-stroke" stroke-width="1.8" stroke-dasharray="5 5" stroke-linecap="round"/>
+        <text x="430" y="430" class="d-display d-green" font-size="16" font-style="italic" font-weight="500">Tailscale</text>
+      </g>
+
+      <rect x="80" y="490" width="640" height="280" rx="18" class="d-card" opacity="0.5"/>
+      <text x="100" y="518" class="d-mono d-ink-muted" font-size="10.5" letter-spacing="1.6">DIGITALOCEAN · SYDNEY REGION</text>
+
+      <g transform="translate(140, 530)">
+        <rect x="0" y="0" width="520" height="170" rx="12" class="d-card-2"/>
+        <text x="20" y="30" class="d-display d-ink" font-size="20" font-weight="500">DigitalOcean droplet</text>
+        <text x="20" y="48" class="d-mono d-ink-muted" font-size="10" letter-spacing="0.6">PORTAINER EDGE AGENT · PULLS FROM HOME</text>
+
+        <g font-size="11.5" class="d-sans d-ink">
+          <rect x="20" y="64" width="115" height="36" rx="6" class="d-card-3"/>
+          <text x="77" y="86" text-anchor="middle">Postgres</text>
+          <rect x="143" y="64" width="115" height="36" rx="6" class="d-card-3"/>
+          <text x="200" y="86" text-anchor="middle">Redis</text>
+          <rect x="266" y="64" width="115" height="36" rx="6" class="d-card-3"/>
+          <text x="323" y="86" text-anchor="middle">Fastify API</text>
+          <rect x="389" y="64" width="115" height="36" rx="6" class="d-card-3"/>
+          <text x="446" y="86" text-anchor="middle">Content pipeline</text>
+        </g>
+
+        <text x="20" y="130" class="d-display d-ink" font-size="14" font-style="italic" font-weight="500">api.howthingswork.app</text>
+        <text x="20" y="148" class="d-sans d-ink-soft" font-size="11">serves readers directly</text>
+      </g>
+
+      <g transform="translate(540, 720)">
+        <rect x="0" y="0" width="180" height="50" rx="8" class="d-card"/>
+        <text x="14" y="22" class="d-display d-ink" font-size="14" font-weight="500">Spaces CDN</text>
+        <text x="14" y="40" class="d-sans d-ink-soft" font-size="10.5">images · globally cached</text>
+      </g>
+
+      <g transform="translate(330, 800)">
+        <rect x="0" y="0" width="46" height="62" rx="8" fill="none" class="d-ink-stroke" stroke-width="1.6"/>
+        <line x1="18" y1="52" x2="28" y2="52" class="d-ink-stroke" stroke-width="1.6" stroke-linecap="round"/>
+        <text x="70" y="22" class="d-display d-ink" font-size="16" font-style="italic" font-weight="500">readers</text>
+        <text x="70" y="40" class="d-sans d-ink-soft" font-size="10.5">curious adults</text>
+        <text x="70" y="54" class="d-sans d-ink-soft" font-size="10.5">around the world</text>
+      </g>
+
+      <path d="M340,700 C340,750 350,780 350,798" fill="none" class="d-green-stroke" stroke-width="1.6" marker-end="url(#arrow2-green)"/>
+      <text x="295" y="755" class="d-mono d-green" font-size="9.5" letter-spacing="0.6" font-weight="500">JSON</text>
+
+      <path d="M560,770 C500,790 420,800 380,808" fill="none" class="d-soft-stroke" stroke-width="1.3" stroke-dasharray="2 3" marker-end="url(#arrow2)"/>
+      <text x="480" y="784" class="d-mono d-ink-muted" font-size="9.5" letter-spacing="0.6">images</text>
+    </svg>
+
+    <p class="diagram-note">
+      The home zone is one warm tonal block; the cloud zone is another;
+      the Tailscale dashed line is the only thing connecting them. A
+      NAS in a house in Melbourne, talking to a single droplet, talking
+      to the world.
+    </p>
+  </section>
+
+  <h2>By the numbers</h2>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="num">~<em>20</em></div>
+      <div class="label">Hours of focused work</div>
+    </div>
+    <div class="stat">
+      <div class="num"><em>2</em></div>
+      <div class="label">Weekends, start to ship</div>
+    </div>
+    <div class="stat">
+      <div class="num"><em>1</em></div>
+      <div class="label">Engineer at the keyboard</div>
+    </div>
+  </div>
+
+  <h2>What's next</h2>
+  <p>
+    I'm planning to open-source the repository once I've finished a more targeted security
+    review. The interesting artefact isn't the app itself — it's the shape of the project:
+    what a solo developer can architect and ship right now, with the right tools and a
+    clear plan. If even one person reads this and thinks <em>I could build the thing I've
+    been putting off</em>, the page has earned its keep.
+  </p>
+
+  <hr/>
+
+  <p class="muted">
+    If you'd like to suggest a topic, flag an error, or talk about the build, the
+    <a class="inline" href="contact.html">contact page</a> has the right address.
+  </p>
+</section>
+</main>
+
+<footer class="ft" data-site-footer></footer>
+<script src="site.js" defer></script>
+
+</body>
+</html>

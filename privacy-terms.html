@@ -2,8 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>Privacy &amp; terms — How {things} Work</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Privacy &amp; terms — How {things} Work</title>
+<meta name="description" content="How we handle your data and the agreement that governs your use of the app and website. Plain-English version on the page; full legal text follows."/>
+<meta name="theme-color" content="#fcf9f4"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Privacy &amp; terms — How {things} Work"/>
+<meta property="og:description" content="How we handle your data and the agreement that governs your use of the app and website."/>
+<meta property="og:url" content="https://howthingswork.app/privacy-terms.html"/>
+<meta property="og:site_name" content="How {things} Work"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="canonical" href="https://howthingswork.app/privacy-terms.html"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='2' y='13' font-family='monospace' font-size='14' fill='%23154212'>{</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="brand.v2.css"/>
 <style>
   /* Two-column layout w/ TOC */
@@ -90,9 +102,6 @@
     font-weight: 500;
     margin: 22px 0 8px;
     color: var(--ink);
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: var(--serif);
   }
   .legal-body p {
     font-size: 15.5px; line-height: 1.65;
@@ -137,6 +146,8 @@
     border-top: 2px solid var(--ink);
   }
   .terms-divider .page-eyebrow { margin-bottom: 14px; }
+  .terms-divider .page-title { font-size: clamp(28px, 3.4vw, 36px); margin-bottom: 12px; }
+  .terms-divider .page-lede  { font-size: 16px; margin-bottom: 28px; }
 
   @media (max-width: 860px) {
     .legal-layout { grid-template-columns: 1fr; gap: 32px; padding: 48px 28px 80px; }
@@ -153,7 +164,7 @@
     </a>
     <div class="nav-links">
       <a href="release-notes.html">Release notes</a>
-      <a href="who-we-are.html">Who we are</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -163,6 +174,7 @@
   </div>
 </nav>
 
+<main>
 <div class="legal-layout">
 
   <aside class="toc">
@@ -306,8 +318,8 @@
 
     <div class="terms-divider">
       <div class="page-eyebrow">Terms of service</div>
-      <h1 class="page-title" style="font-size: clamp(28px, 3.4vw, 36px); margin-bottom: 12px;">Terms.</h1>
-      <p class="page-lede" style="font-size: 16px; margin-bottom: 28px;">
+      <h1 class="page-title">Terms.</h1>
+      <p class="page-lede">
         The agreement that governs your use of the app and this website. By using either, you agree to these terms.
       </p>
     </div>
@@ -389,43 +401,10 @@
 
   </article>
 </div>
+</main>
 
-<!-- Footer -->
-<footer class="ft">
-  <div class="ft-inner">
-    <div class="ft-top">
-      <div class="ft-news">
-        <h3>One explainer a week.</h3>
-        <p>A quiet newsletter — one topic, plainly explained, every Sunday. Unsubscribe in one tap.</p>
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed ✓';">
-          <input type="email" placeholder="you@somewhere.com" required/>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-      <div class="ft-col"><h4>Product</h4><ul>
-        <li><a href="index.html#download">Download iOS</a></li>
-        <li><a aria-disabled="true" style="color: var(--ink-faint); cursor: not-allowed;">Download Android <span style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7;">· soon</span></a></li>
-        <li><a href="release-notes.html">Release notes</a></li>
-      </ul></div>
-      <div class="ft-col"><h4>About</h4><ul>
-        <li><a href="who-we-are.html">Who we are</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="privacy-terms.html">Privacy &amp; terms</a></li>
-      </ul></div>
-    </div>
-    <div class="ft-bottom">
-      <span class="wm mono-ink"><span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span></span>
-      <div style="display:flex;align-items:center;gap:20px;">
-        <span>© 2026 · howthingswork.app</span>
-        <div class="ft-socials">
-          <a aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H22l-7.5 8.6L23 21h-6.8l-5.3-6.8L4.6 21H1.5l8-9.2L1 3h7l4.8 6.3L18.9 3zm-1.2 16h1.7L6.4 4.9H4.6z"/></svg></a>
-          <a aria-label="RSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3a16 16 0 0116 16h-3a13 13 0 00-13-13V3zm0 6a10 10 0 0110 10h-3a7 7 0 00-7-7V9zm2 7a2 2 0 110 4 2 2 0 010-4z"/></svg></a>
-          <a aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+<footer class="ft" data-site-footer></footer>
+<script src="site.js" defer></script>
 
 </body>
 </html>
