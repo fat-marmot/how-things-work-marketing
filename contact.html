@@ -4,11 +4,11 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Contact — How {things} Work</title>
-<meta name="description" content="Get in touch with How {things} Work — by email, form, or post. Pick the address that matches what you're writing about."/>
+<meta name="description" content="Get in touch with How {things} Work — hello@howthingswork.app"/>
 <meta name="theme-color" content="#fcf9f4"/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Contact — How {things} Work"/>
-<meta property="og:description" content="Get in touch — by email, form, or post."/>
+<meta property="og:description" content="Get in touch — hello@howthingswork.app"/>
 <meta property="og:url" content="https://howthingswork.app/contact.html"/>
 <meta property="og:site_name" content="How {things} Work"/>
 <meta name="twitter:card" content="summary"/>
@@ -18,127 +18,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="brand.v2.css"/>
 <style>
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    margin: 24px 0 24px;
-    border-top: 1px solid var(--hairline-2);
-  }
-  .channel {
-    padding: 28px 32px 28px 0;
-    border-bottom: 1px solid var(--hairline);
-    border-right: 1px solid var(--hairline);
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .channel:nth-child(2n) { padding-right: 0; padding-left: 32px; border-right: none; }
-  .channel:nth-last-child(-n+2) { border-bottom: none; }
-  .channel .for {
-    font-family: var(--mono);
-    font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-  .channel h4 {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 22px; font-weight: 500;
-    letter-spacing: -0.3px;
-    margin: 4px 0 4px;
-  }
-  .channel .addr {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--green);
-    word-break: break-all;
-  }
-  .channel .addr a { color: inherit; border-bottom: 1px solid var(--green-soft); }
-  .channel .addr a:hover { border-bottom-color: var(--green); }
-  .channel p {
-    font-size: 14px; line-height: 1.55;
-    color: var(--ink-muted);
-    margin: 4px 0 0; text-wrap: pretty;
-  }
-  .channel .turn {
-    font-family: var(--mono);
-    font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-top: 6px;
-  }
-
-  /* form */
-  .form-card {
+  .contact-block {
+    margin: 24px 0 32px;
+    padding: 32px 36px;
     background: var(--cream-2);
     border-radius: 18px;
-    padding: 32px 36px 28px;
-    margin-top: 12px;
   }
-  .form-card h3 {
-    font-family: var(--serif);
-    font-size: 22px; font-weight: 500;
-    letter-spacing: -0.3px;
-    margin: 0 0 6px;
-  }
-  .form-card p {
-    font-size: 13.5px; line-height: 1.55;
-    color: var(--ink-muted);
-    margin: 0 0 20px;
-  }
-  .form-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 14px;
-  }
-  .field { display: flex; flex-direction: column; gap: 6px; grid-column: span 1; }
-  .field.full { grid-column: span 2; }
-  .field label {
+  .contact-block .addr {
     font-family: var(--mono);
-    font-size: 10px; letter-spacing: 1.3px; text-transform: uppercase;
-    color: var(--ink-faint);
+    font-size: 18px;
+    color: var(--green);
+    word-break: break-all;
+    margin: 0 0 16px;
   }
-  .field input, .field select, .field textarea {
-    font: inherit; font-size: 14px;
-    padding: 11px 13px;
-    background: var(--cream);
-    border: 1px solid var(--hairline-2);
-    border-radius: 10px;
-    color: var(--ink);
-    outline: none;
-    resize: vertical;
-  }
-  .field textarea { min-height: 120px; line-height: 1.5; }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); }
-  .form-actions {
-    display: flex; align-items: center; gap: 14px;
-    margin-top: 18px;
-  }
-  .form-actions .hint {
-    font-size: 12px; color: var(--ink-faint);
-    font-family: var(--mono); letter-spacing: 1px;
-  }
-
-  .post-block {
-    margin-top: 32px;
-    padding: 24px 28px;
-    border-left: 2px solid var(--ink);
-    background: var(--cream-2);
-    border-radius: 0 12px 12px 0;
-  }
-  .post-block .label {
-    font-family: var(--mono);
-    font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 10px;
-  }
-  .post-block address {
-    font-style: normal;
-    font-family: var(--serif);
-    font-size: 16px; line-height: 1.55;
-    color: var(--ink);
+  .contact-block .addr a { color: inherit; border-bottom: 1px solid var(--green-soft); }
+  .contact-block .addr a:hover { border-bottom-color: var(--green); }
+  .contact-block p {
+    font-size: 15.5px; line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0; text-wrap: pretty;
   }
 
   @media (max-width: 720px) {
-    .contact-grid { grid-template-columns: 1fr; }
-    .channel, .channel:nth-child(2n) { padding: 22px 0; border-right: none; }
-    .form-grid { grid-template-columns: 1fr; }
-    .field.full { grid-column: span 1; }
+    .contact-block { padding: 24px 22px; }
+    .contact-block .addr { font-size: 16px; }
   }
 </style>
 </head>
@@ -150,7 +53,6 @@
       <span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span>
     </a>
     <div class="nav-links">
-      <a href="release-notes.html">Release notes</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -163,125 +65,17 @@
 
 <main>
 <section class="page">
-  <div class="page-eyebrow">About · Contact</div>
+  <div class="page-eyebrow">Contact</div>
   <h1 class="page-title">Get in <em>touch</em>.</h1>
-  <p class="page-lede">
-    We answer email — slowly but personally. Pick the address that matches what you're writing about
-    and you'll skip the inbox triage.
-  </p>
 
-  <h2>By email</h2>
-  <div class="contact-grid">
-
-    <div class="channel">
-      <span class="for">For readers</span>
-      <h4>Suggest a topic.</h4>
-      <span class="addr"><a href="mailto:topics@howthingswork.app">topics@howthingswork.app</a></span>
-      <p>Something you'd love an explainer on? Send it. We read everything, even if we can't reply to all of it.</p>
-      <span class="turn">Avg. response · 5 days</span>
-    </div>
-
-    <div class="channel">
-      <span class="for">For readers</span>
-      <h4>Found a mistake?</h4>
-      <span class="addr"><a href="mailto:corrections@howthingswork.app">corrections@howthingswork.app</a></span>
-      <p>Tell us the topic, the line, and (ideally) a source. Confirmed corrections appear with your name unless you'd rather not.</p>
-      <span class="turn">Avg. response · 2 days</span>
-    </div>
-
-    <div class="channel">
-      <span class="for">For experts</span>
-      <h4>Review or contribute.</h4>
-      <span class="addr"><a href="mailto:editorial@howthingswork.app">editorial@howthingswork.app</a></span>
-      <p>If you have specialist expertise and an hour a month, we'd like to hear from you. Reviewers are paid.</p>
-      <span class="turn">Avg. response · 1 week</span>
-    </div>
-
-    <div class="channel">
-      <span class="for">For press</span>
-      <h4>Press &amp; partnerships.</h4>
-      <span class="addr"><a href="mailto:press@howthingswork.app">press@howthingswork.app</a></span>
-      <p>Interview requests, partnership enquiries, embeddable explainer licensing. Fastest replies, generally.</p>
-      <span class="turn">Avg. response · 1–2 days</span>
-    </div>
-
-    <div class="channel">
-      <span class="for">For technical issues</span>
-      <h4>Something's broken.</h4>
-      <span class="addr"><a href="mailto:support@howthingswork.app">support@howthingswork.app</a></span>
-      <p>App crashes, sync issues, payment problems. Include your iOS version and the device model if you can.</p>
-      <span class="turn">Avg. response · 3 days</span>
-    </div>
-
-    <div class="channel">
-      <span class="for">For data &amp; privacy</span>
-      <h4>Privacy enquiries.</h4>
-      <span class="addr"><a href="mailto:privacy@howthingswork.app">privacy@howthingswork.app</a></span>
-      <p>GDPR / DPA / CCPA requests, takedown of personal data, anything covered by our <a class="inline" href="privacy-terms.html">privacy notice</a>.</p>
-      <span class="turn">Statutory · within 30 days</span>
-    </div>
-
+  <div class="contact-block">
+    <p class="addr"><a href="mailto:hello@howthingswork.app">hello@howthingswork.app</a></p>
+    <p>
+      If you've spotted an error, want to suggest a topic, or just want to talk about how
+      the app got built, the same address works for all of it. I read everything; I reply
+      when I can.
+    </p>
   </div>
-
-  <h2>Or use this form</h2>
-  <div class="form-card">
-    <h3>Send us a note.</h3>
-    <p>Routes to the right inbox based on the topic you choose.</p>
-    <form class="contact-form" novalidate>
-      <div class="form-grid">
-        <div class="field">
-          <label for="cf-name">Your name</label>
-          <input type="text" id="cf-name" placeholder="Iris Whitfield" required/>
-        </div>
-        <div class="field">
-          <label for="cf-email">Email</label>
-          <input type="email" id="cf-email" placeholder="you@somewhere.com" required/>
-        </div>
-        <div class="field full">
-          <label for="cf-topic">What's this about?</label>
-          <select id="cf-topic">
-            <option>Suggest a topic</option>
-            <option>Report a correction</option>
-            <option>Editorial / contribute</option>
-            <option>Press &amp; partnerships</option>
-            <option>Technical / app issue</option>
-            <option>Privacy enquiry</option>
-            <option>Something else</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label for="cf-msg">Your message</label>
-          <textarea id="cf-msg" placeholder="Tell us a little. The more specific, the better the reply." required></textarea>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-ink">Send note</button>
-        <span class="hint">We'll never share your address.</span>
-      </div>
-    </form>
-  </div>
-
-  <h2>By post</h2>
-  <p class="muted">
-    For things that ought to be on paper — corrections to the print editions, legal correspondence,
-    the occasional postcard from someone who just liked a piece.
-  </p>
-  <div class="post-block">
-    <div class="label">Editorial office</div>
-    <address>
-      How {things} Work Ltd.<br/>
-      4 Candlemaker Row, Floor 2<br/>
-      Edinburgh, EH1 2QE<br/>
-      United Kingdom
-    </address>
-  </div>
-
-  <hr/>
-
-  <p class="muted">
-    A note on inbox volume: we are six people. If you don't hear back within the listed window,
-    a polite nudge is welcome — it usually means your email landed in the wrong queue.
-  </p>
 </section>
 </main>
 

@@ -163,7 +163,6 @@
       <span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span>
     </a>
     <div class="nav-links">
-      <a href="release-notes.html">Release notes</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -177,30 +176,33 @@
 <main>
 <section class="page">
   <div class="page-eyebrow">About · Why it exists · 25 April 2026</div>
-  <h1 class="page-title">A solo project, shipped in a fortnight, on a stack that <em>shouldn't</em> have been possible.</h1>
+  <div class="pull">
+    What follows are my actual thoughts. They've been crafted and rewritten with AI so they're bearable to read. If you're here and getting through this, you'll thank me — otherwise you'd have tuned out three lines in.<br><br>— Colin
+  </div>
+  <h1 class="page-title">A solo project, shipped in a fortnight, an experiment in AI development.</h1>
   <p class="page-lede">
-    How {things} Work is a one-person project. I'm Colin Burns, a software engineer based in
-    Melbourne. I built this app over two weekends — about twenty hours of focused work — and
-    the result is what you'd normally expect from a small team running for a quarter. An iOS
-    app, two backend services, a content pipeline, self-hosted infrastructure, full CI/CD.
-    Twelve months ago this would have been an ambitious year-long side project. Six months ago,
+    <span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span> is a one-person project. I'm Colin Burns, a software engineer in
+    Melbourne (for now). I built this app over two weekends — about twenty hours of focused
+    work — and what came out is roughly what a small team would normally ship in a quarter.
+    An iOS app, two backend services, a content pipeline, self-hosted infrastructure, full
+    CI/CD. Twelve months ago this would have been an ambitious side project. Six months ago,
     a tough quarter. Today: two weekends.
   </p>
 
-  <h2>The honest motivation</h2>
+  <h2>The motivation</h2>
   <p>
-    There used to be a moat around the industry. Building anything substantial — a real
-    application, with a backend, a database, a deployment pipeline, a mobile app, a content
-    system — was hard, and the difficulty was the reason the work was paid the way it was.
-    Years of experience went into knowing which patterns to reach for, which mistakes to avoid,
-    and how all the pieces fit together.
+    There used to be a moat around our industry. Building anything substantial — a real
+    application, with a backend, a database, a deployment pipeline, a mobile app, content —
+    was hard. The difficulty was the reason the work was paid the way it was. Years of
+    experience went into knowing which patterns to reach for, which mistakes to avoid, and
+    how all the pieces fit together.
   </p>
   <p>
-    That moat is shrinking, and that turns out to be the most exciting thing to happen to
-    software in my career. The constraints I grew up with — the tedious month of boilerplate
-    before you got to the interesting work, the sheer typing tax of building something
-    end-to-end — those are dissolving. What's left is the part I always liked: deciding what
-    to build, deciding how it should be put together, deciding where the failure modes hide.
+    That moat is shrinking. That is both exciting and terrifying. The constraints I grew up
+    with — the tedious month of boilerplate before you got to the interesting work, the
+    typing tax of building anything end-to-end — they're dissolving. What's left is the part
+    I actually liked: deciding what to build, deciding how it should be put together, and
+    deciding where the failure modes hide.
   </p>
   <p>
     I won't pretend it's not also unsettling. Every software engineer I know is feeling some
@@ -212,17 +214,27 @@
 
   <h2>Why a "how things work" app</h2>
   <p>
-    The premise comes from a science-fiction trope I've always loved. Someone travels back in
-    time and finds they can <em>name</em> the things from the future — microwave, satellite,
-    insulin — but can't actually <em>explain</em> any of them. The mechanics are gone the
-    moment they leave their century.
+    The premise comes from a sci-fi trope my wife told me about. Someone travels back in
+    time and finds they can <em>name</em> the things they brought from the future — microwave,
+    satellite, insulin — but can't actually <em>explain</em> any of them. The mechanics are
+    gone the moment they leave their century.
   </p>
   <p>
-    I wanted a tool for that. A pocket reference for the everyday machinery of modern life,
-    written plainly, short enough to read in a queue, working offline. Not a survival manual,
-    not prepper content — I wanted curiosity, well-served, not a doomsday framing. And honestly,
-    I also wanted an excuse to learn iOS development properly. New platform, real project, no
-    tutorials.
+    Honestly, I know nothing about the world. How does GPS work? How does a microwave
+    actually heat food? I know that putting metal or aluminium foil in there is pretty
+    spectacular, but I couldn't tell you why. I wanted a tool I could open while I'm in line
+    at Starbucks waiting for the coffee — the physics of which I also don't understand —
+    and read a quick, digestible snippet about something everyday.
+  </p>
+  <p>
+    The model is the ELI5 ("explain it like I'm five") subreddit, but a step up. Treat the
+    reader as an adult with very little knowledge of the topic — you don't have to dumb it
+    down to actually-five-year-old level. Plain language, but not babying.
+  </p>
+  <p>
+    I also wanted an excuse to build something new. I hadn't shipped an iOS app before. I'd
+    never set up a content extraction pipeline. And I wanted to put this "AI" thing through
+    its paces.
   </p>
 
   <div class="pull">
@@ -240,24 +252,24 @@
   <p>
     From the PRD, <a class="inline" href="https://www.task-master.dev" target="_blank" rel="noopener">Taskmaster</a>
     broke the work down into discrete, ordered tasks with dependencies. <strong>Claude Code</strong>
-    then picked up tasks one at a time, wrote the implementations, and handed each piece back for
-    review. My job was architecture, judgement calls, security review, and saying "no, that's not
-    the trade-off I want."
+    picked up tasks one at a time, wrote the implementations, and handed each piece back for
+    review. My job was architecture, judgement calls, security review, and occasionally
+    saying "no, that's not the trade-off I want."
   </p>
   <p>
     The design followed the same pattern. I'm not a designer. I think I can tell good design
     from bad, but I can't produce good design from a blank page — there's a real difference
-    between recognising taste and having the hands to express it. Halfway through the project,
-    Claude Design was released, and that gave me the missing third of the team.
+    between recognising taste and having the hands to express it. Halfway through the
+    project, Claude Design was released. That gave me the missing third of the team.
   </p>
   <p>
     The app's visual system started as a brief I worked out in a Claude conversation: an
-    "academic atelier" direction, warm and editorial, deliberately rejecting both sterile
-    EdTech and gamified cartoonishness. I iterated on screens with Claude Design until the
-    look felt right. For this marketing site, I asked it for eight variations against the
-    app's visual language; this is the one I picked. A few of the others looked more
-    aggressively editorial — newspaper-like, dense — but they came with hallucinated copy I'd
-    have had to audit and rewrite end-to-end. This one wore its constraints more gently.
+    "academic atelier" direction — warm, editorial, deliberately not sterile EdTech and not
+    gamified cartoon. I iterated on screens with Claude Design until the look felt right.
+    For this marketing site, I asked it for eight variations against the app's visual
+    language; this is the one I picked. A few of the others looked more aggressively
+    editorial — newspaper-like, dense — but they came with hallucinated copy I'd have had
+    to audit and rewrite from scratch. This one wore its constraints more gently.
   </p>
 
   <h2>The stack</h2>
@@ -286,10 +298,12 @@
 
   <h2>What this actually felt like</h2>
   <p>
-    The honest verdict: extraordinary, with footnotes. The AI did not replace the engineering
-    — architecture, storage strategy, security model, deployment topology, the dozens of
-    little judgement calls that decide whether a system holds up under load — those were
-    decisions a human still has to make, and the AI was wrong often enough that you notice.
+    The honest verdict: extraordinary, with footnotes. The AI did not replace the engineering.
+    Architecture, storage strategy, security model, deployment topology, the dozens of small
+    judgement calls that decide whether a system holds up — those are still decisions a human
+    has to make. The AI was wrong often enough that you notice.
+  </p>
+  <p>
     What it replaced, almost completely, was the <em>typing</em>. The line-by-line grind.
     Afternoons that used to disappear into boilerplate now compress into review sessions.
   </p>
@@ -299,9 +313,10 @@
     that imagines what software work looks like a few years into this transition: a country
     mechanic, working out of a corrugated steel shop, diagnosing the gap between what farmers
     specified and what their generated tools actually do. The skill that pays the bills isn't
-    typing code. It's reading specs against reality, choreographing how generated tools
-    interact, and translating the kind of knowledge that lives in someone's hands into
-    language a machine can act on. It's a piece of fiction, but it doesn't feel far off.
+    typing code anymore. It's reading specs against reality, choreographing how generated
+    tools interact with each other, and translating the kind of knowledge that lives in
+    someone's hands into language a machine can act on. It's fiction, but it doesn't feel
+    far off.
   </p>
   <p>
     That's roughly what building this app felt like, in miniature. The leverage is real. The
@@ -685,19 +700,27 @@
 
   <h2>What's next</h2>
   <p>
-    I'm planning to open-source the repository once I've finished a more targeted security
-    review. The interesting artefact isn't the app itself — it's the shape of the project:
-    what a solo developer can architect and ship right now, with the right tools and a
-    clear plan. If even one person reads this and thinks <em>I could build the thing I've
-    been putting off</em>, the page has earned its keep.
+    I'm planning to make the repository public once I've finished a more targeted security
+    review. The interesting artefact isn't the app itself — it's the <em>shape</em> of the
+    project. What a solo developer can architect and ship right now, with the right tools
+    and a clear plan. If even one person reads this and thinks <em>I could build the thing
+    I've been putting off</em>, the page has earned its keep.
+  </p>
+  <p>
+    I am sure other software developers will review this code and say "I could do better", 
+    or nitpick, this or that, but I would argue that those same software developers would 
+    do that whether this was AI written or developed by the "best" software team in the world.
+    And, again, that's not the point of this project.
+  </p>
+  <p>
+    In the end I really hope that people use this app, because if that happens I'll be able to 
+    learn a whole new set of things about how AI writes code. One of the things I tried to do 
+    through this development was to not over engineer or prematurely optimise things too much.
+    Hopefully I get to see if that worked.
   </p>
 
   <hr/>
 
-  <p class="muted">
-    If you'd like to suggest a topic, flag an error, or talk about the build, the
-    <a class="inline" href="contact.html">contact page</a> has the right address.
-  </p>
 </section>
 </main>
 
