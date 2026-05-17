@@ -91,7 +91,7 @@
     text-wrap: balance;
   }
 
-  /* Diagram blocks (funnel · coda · deployment) */
+  /* Diagram blocks (pipeline · version 1 · version 2) */
   .diagram-block { margin: 28px 0 56px; }
   .diagram-label {
     display: flex; align-items: baseline; justify-content: space-between;
@@ -123,8 +123,6 @@
     text-wrap: pretty;
   }
   .diagram-note strong { font-style: normal; font-weight: 500; color: var(--ink); }
-  .coda { margin-top: 8px; }
-  .coda .diagram-svg { max-width: 640px; }
 
   /* SVG-internal classes (referenced from inline SVG below) */
   .d-card { fill: #f4ede0; }
@@ -168,25 +166,25 @@
     </div>
   </div>
   <div class="nav-right">
-    <span class="free-pill">Free forever</span>
+    <span class="free-pill">Free</span>
     <a href="index.html#download" class="btn btn-ink">Get the app</a>
   </div>
 </nav>
 
 <main>
 <section class="page">
-  <div class="page-eyebrow">About · Why it exists · 25 April 2026</div>
+  <div class="page-eyebrow">About · Why it exists · 17 May 2026</div>
   <div class="pull">
     What follows are my actual thoughts. They've been crafted and rewritten with AI so they're bearable to read. If you're here and getting through this, you'll thank me — otherwise you'd have tuned out three lines in.<br><br>— Colin
   </div>
-  <h1 class="page-title">A solo project, shipped in a fortnight, an experiment in AI development.</h1>
+  <h1 class="page-title">A solo project, shipped in a month, an experiment in AI development.</h1>
   <p class="page-lede">
     <span class="word">HOW</span><span><span class="brace">{</span><span class="slot">things</span><span class="brace">}</span></span><span class="word">WORK</span> is a one-person project. I'm Colin Burns, a software engineer in
-    Melbourne (for now). I built this app over two weekends — about twenty hours of focused
+    Melbourne (for now). I built this app over four weekends — about forty hours of focused
     work — and what came out is roughly what a small team would normally ship in a quarter.
     An iOS app, two backend services, a content pipeline, self-hosted infrastructure, full
     CI/CD. Twelve months ago this would have been an ambitious side project. Six months ago,
-    a tough quarter. Today: two weekends.
+    a tough quarter. Today: four weekends.
   </p>
 
   <h2>The motivation</h2>
@@ -238,7 +236,7 @@
   </p>
 
   <div class="pull">
-    Twelve months ago this would have been a year-long side project. Today: two weekends.
+    Twelve months ago this would have been a year-long side project. Today: four weekends.
   </div>
 
   <h2>How it actually got built</h2>
@@ -271,30 +269,6 @@
     editorial — newspaper-like, dense — but they came with hallucinated copy I'd have had
     to audit and rewrite from scratch. This one wore its constraints more gently.
   </p>
-
-  <h2>The stack</h2>
-  <div class="stack">
-    <div class="stack-item">
-      <div class="label">Mobile</div>
-      <h4>iOS app (React Native)</h4>
-      <p>Built with Expo and React Native, offline-first via SQLite. Targeting iOS for now; Android falls out cheaply when I'm ready. The first mobile app I've shipped.</p>
-    </div>
-    <div class="stack-item">
-      <div class="label">Backend</div>
-      <h4>API + content pipeline</h4>
-      <p>Two services: a Fastify API serving the app, and a content pipeline that drafts, edits, and ships explainers using LLMs with a retrieval layer.</p>
-    </div>
-    <div class="stack-item">
-      <div class="label">Infrastructure</div>
-      <h4>Self-hosted, end-to-end</h4>
-      <p>Terraform-provisioned droplet, self-hosted Postgres and Redis, DO Spaces with a CDN for images. Tailscale for everything administrative.</p>
-    </div>
-    <div class="stack-item">
-      <div class="label">Delivery</div>
-      <h4>Custom CI/CD</h4>
-      <p>A self-hosted GitHub Actions runner on a NAS at home, pushing images to a private container registry. Portainer manages deploys to the droplet via an Edge Agent.</p>
-    </div>
-  </div>
 
   <h2>What this actually felt like</h2>
   <p>
@@ -460,7 +434,7 @@
         <rect width="140" height="64" rx="10" class="d-card"/>
         <text x="14" y="22" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">10</text>
         <text x="14" y="42" class="d-sans d-ink" font-size="13" font-weight="500">Imagegen</text>
-        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">→ CDN bucket</text>
+        <text x="14" y="58" class="d-sans d-ink-soft" font-size="10.5">hero image</text>
       </g>
       <g transform="translate(680, 866)">
         <rect width="140" height="64" rx="10" class="d-card-2"/>
@@ -497,78 +471,55 @@
     </p>
   </section>
 
-  <section class="diagram-block coda">
-    <div class="diagram-label">
-      <span class="diagram-num">Coda · And then…</span>
-      <span class="diagram-name">From pipeline output to reader's pocket</span>
+  <h2>Two versions of the same app</h2>
+  <p>
+    This app has shipped in two quite different shapes, and the gap between them is the
+    most useful thing on this page. The first version had a real backend — a server the
+    app talked to every time you opened it. The current version has no server at all;
+    everything lives inside the app. Here is what I built first, and what I replaced it
+    with.
+  </p>
+
+  <h2>Version 1 · The original build</h2>
+  <p>
+    The first version treated the app as a thin client. It opened, called an API, and
+    rendered whatever JSON came back. That is the standard shape for an app whose content
+    keeps changing — and early on, I didn't yet know that mine wouldn't.
+  </p>
+  <p>
+    Behind the API sat a proper backend: a DigitalOcean droplet running Postgres, Redis,
+    and a Fastify service, with images served from a CDN. The content pipeline ran there
+    too. Deployment was a self-hosted GitHub Actions runner on a NAS under my stairs,
+    pushing container images to a private registry, with Portainer pulling them down to
+    the droplet over Tailscale. It worked well — it was also more machinery than the app
+    would turn out to need.
+  </p>
+  <div class="stack">
+    <div class="stack-item">
+      <div class="label">Mobile</div>
+      <h4>iOS app (React Native)</h4>
+      <p>Built with Expo and React Native, offline-first via SQLite. Targeting iOS for now; Android falls out cheaply when I'm ready. The first mobile app I've shipped.</p>
     </div>
-
-    <svg class="diagram-svg" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pc-title">
-      <title id="pc-title">Coda: Postgres to Fastify API to mobile app, with Spaces CDN serving images</title>
-      <defs>
-        <marker id="pc-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
-        </marker>
-        <marker id="pc-arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0,0 L10,5 L0,10 z" fill="#154212"/>
-        </marker>
-      </defs>
-
-      <text x="360" y="32" text-anchor="middle" class="d-display d-ink-soft" font-size="15" font-style="italic" font-weight="500">and then the app reads it.</text>
-
-      <g transform="translate(40, 100)">
-        <rect width="160" height="80" rx="12" class="d-card-2"/>
-        <text x="16" y="26" class="d-display d-ink" font-size="16" font-weight="500">Postgres</text>
-        <text x="16" y="46" class="d-sans d-ink-soft" font-size="10.5">topic content,</text>
-        <text x="16" y="60" class="d-sans d-ink-soft" font-size="10.5">embeddings, quiz, links</text>
-        <text x="16" y="76" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">PIPELINE WRITES HERE</text>
-      </g>
-
-      <path d="M204,140 C232,140 250,140 268,140" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#pc-arr)"/>
-
-      <g transform="translate(272, 100)">
-        <rect width="170" height="80" rx="12" class="d-card-2"/>
-        <text x="16" y="26" class="d-display d-ink" font-size="16" font-weight="500">Fastify API</text>
-        <text x="16" y="46" class="d-sans d-ink-soft" font-size="10.5">reads from Postgres,</text>
-        <text x="16" y="60" class="d-sans d-ink-soft" font-size="10.5">serves the app</text>
-        <text x="16" y="76" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">DIGITALOCEAN DROPLET</text>
-      </g>
-
-      <path d="M446,140 C480,140 502,140 520,140" fill="none" class="d-green-stroke" stroke-width="1.6" marker-end="url(#pc-arr-green)"/>
-      <text x="478" y="132" text-anchor="middle" class="d-mono d-green" font-size="9" letter-spacing="0.6" font-weight="500">JSON</text>
-
-      <g transform="translate(528, 92)">
-        <rect width="56" height="96" rx="10" fill="none" class="d-ink-stroke" stroke-width="1.6"/>
-        <line x1="22" y1="80" x2="34" y2="80" class="d-ink-stroke" stroke-width="1.6" stroke-linecap="round"/>
-        <text x="68" y="36" class="d-display d-ink" font-size="14" font-style="italic" font-weight="500">readers</text>
-        <text x="68" y="54" class="d-sans d-ink-soft" font-size="10.5">on demand,</text>
-        <text x="68" y="68" class="d-sans d-ink-soft" font-size="10.5">cached offline</text>
-      </g>
-
-      <g transform="translate(272, 210)">
-        <rect width="170" height="48" rx="10" class="d-card"/>
-        <text x="16" y="20" class="d-display d-ink" font-size="13" font-weight="500">Spaces CDN</text>
-        <text x="16" y="38" class="d-sans d-ink-soft" font-size="10">images · globally cached</text>
-      </g>
-
-      <path d="M446,234 C520,234 540,200 552,192" fill="none" class="d-soft-stroke" stroke-width="1.3" stroke-dasharray="2 3" marker-end="url(#pc-arr)"/>
-      <text x="494" y="222" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">images</text>
-    </svg>
-
-    <p class="diagram-note">
-      <strong>A coda, not a diagram.</strong> Three steps in a line —
-      the pipeline writes to Postgres, the API reads from Postgres, the
-      app reads from the API — with Spaces CDN as the small offshoot
-      supplying images directly to the phone. Same legend as the hero
-      above: green is dynamic API traffic, soft dashed is image content.
-    </p>
-  </section>
-
-  <h2>How it gets deployed</h2>
+    <div class="stack-item">
+      <div class="label">Backend</div>
+      <h4>API + content pipeline</h4>
+      <p>Two services: a Fastify API serving the app, and a content pipeline that drafts, edits, and ships explainers using LLMs with a retrieval layer.</p>
+    </div>
+    <div class="stack-item">
+      <div class="label">Infrastructure</div>
+      <h4>Self-hosted, end-to-end</h4>
+      <p>Terraform-provisioned droplet, self-hosted Postgres and Redis, DO Spaces with a CDN for images. Tailscale for everything administrative.</p>
+    </div>
+    <div class="stack-item">
+      <div class="label">Delivery</div>
+      <h4>Custom CI/CD</h4>
+      <p>A self-hosted GitHub Actions runner on a NAS at home, pushing images to a private container registry. Portainer manages deploys to the droplet via an Edge Agent.</p>
+    </div>
+  </div>
 
   <section class="diagram-block">
     <div class="diagram-label">
-      <span class="diagram-num">Vertical flow</span>
+      <span class="diagram-num">How version 1 ran</span>
       <span class="diagram-name">From the stairs to the world</span>
     </div>
 
@@ -682,14 +633,124 @@
     </p>
   </section>
 
+  <h2>Version 2 · The rebuild</h2>
+  <p>
+    Then the content settled. There are 212 explainers, and once an explainer is written,
+    it's written — there is no feed, no user data, nothing live. The app was paying a
+    monthly cloud bill to fetch a set of files that never changed.
+  </p>
+  <p>
+    So I took the backend out. The app now carries every explainer and every image inside
+    its own bundle. It runs fully offline — once installed, it never makes a network
+    request. No droplet, no Postgres, no Redis, no CDN. The recurring cost dropped to
+    roughly nothing, and that is the point: I want the app to stay free, and a free app
+    shouldn't quietly cost me money every month to keep running.
+  </p>
+  <p>
+    The content pipeline didn't go away — it moved. It now runs on a server at home. When
+    I want to add topics, I run the pipeline there, it generates the content, and that
+    content gets baked into a new build. The only thing still hosted is the CI/CD that
+    produces the build itself.
+  </p>
+  <p>
+    Next on the list is over-the-air updates, so new topics can reach readers without a
+    full app release. Until then, fresh content rides along with each new build.
+  </p>
+
+  <section class="diagram-block">
+    <div class="diagram-label">
+      <span class="diagram-num">How version 2 runs</span>
+      <span class="diagram-name">Everything ships inside the app</span>
+    </div>
+
+    <svg class="diagram-svg" viewBox="0 0 720 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v2-title">
+      <title id="v2-title">Version 2 architecture: a home server builds the app, the App Store delivers it, and readers run it fully offline</title>
+      <defs>
+        <marker id="v2-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
+        </marker>
+        <marker id="v2-arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#154212"/>
+        </marker>
+        <marker id="v2-arr-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b8af9d"/>
+        </marker>
+      </defs>
+
+      <text x="360" y="34" text-anchor="middle" class="d-display d-ink-soft" font-size="15" font-style="italic" font-weight="500">one server builds it — then the app is on its own.</text>
+
+      <rect x="90" y="58" width="540" height="180" rx="18" class="d-card" opacity="0.55"/>
+      <text x="112" y="86" class="d-mono d-ink-muted" font-size="10.5" letter-spacing="1.6">HOME · ONE SELF-HOSTED SERVER</text>
+
+      <g transform="translate(116, 100)">
+        <rect width="234" height="74" rx="10" class="d-card-2"/>
+        <text x="18" y="24" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">CONTENT</text>
+        <text x="18" y="45" class="d-sans d-ink" font-size="14" font-weight="500">Content pipeline</text>
+        <text x="18" y="61" class="d-sans d-ink-soft" font-size="10.5">drafts &amp; generates topics</text>
+      </g>
+
+      <path d="M350,137 L368,137" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#v2-arr)"/>
+
+      <g transform="translate(372, 100)">
+        <rect width="234" height="74" rx="10" class="d-card-2"/>
+        <text x="18" y="24" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">DELIVERY</text>
+        <text x="18" y="45" class="d-sans d-ink" font-size="14" font-weight="500">CI/CD build</text>
+        <text x="18" y="61" class="d-sans d-ink-soft" font-size="10.5">bakes content into the app</text>
+      </g>
+
+      <text x="112" y="214" class="d-display d-ink-soft" font-size="12.5" font-style="italic" font-weight="500">add a topic → run the pipeline → make a build. no cloud in the loop.</text>
+
+      <path d="M360,238 C360,254 360,264 360,274" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#v2-arr)"/>
+
+      <rect x="234" y="278" width="252" height="86" rx="14" class="d-card-warm d-soft-shadow"/>
+      <text x="360" y="304" text-anchor="middle" class="d-mono d-green" font-size="10" letter-spacing="1.6" font-weight="500">THE BUILD</text>
+      <text x="360" y="330" text-anchor="middle" class="d-display d-green" font-size="21" font-style="italic" font-weight="500">Self-contained app</text>
+      <text x="360" y="350" text-anchor="middle" class="d-sans d-ink-soft" font-size="11">every explainer &amp; image baked inside</text>
+
+      <path d="M360,364 C360,382 360,392 360,402" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#v2-arr)"/>
+
+      <g transform="translate(285, 406)">
+        <rect width="150" height="46" rx="10" class="d-card-2"/>
+        <text x="75" y="28" text-anchor="middle" class="d-display d-ink" font-size="15" font-weight="500">App Store</text>
+      </g>
+
+      <path d="M360,452 C360,474 360,486 360,500" fill="none" class="d-green-stroke" stroke-width="1.6" marker-end="url(#v2-arr-green)"/>
+      <text x="370" y="480" class="d-mono d-green" font-size="9" letter-spacing="0.6" font-weight="500">DOWNLOAD</text>
+
+      <g transform="translate(250, 504)">
+        <rect width="46" height="62" rx="8" fill="none" class="d-ink-stroke" stroke-width="1.6"/>
+        <line x1="18" y1="52" x2="28" y2="52" class="d-ink-stroke" stroke-width="1.6" stroke-linecap="round"/>
+        <text x="66" y="22" class="d-display d-ink" font-size="16" font-style="italic" font-weight="500">readers</text>
+        <text x="66" y="40" class="d-sans d-ink-soft" font-size="10.5">the app works fully offline —</text>
+        <text x="66" y="55" class="d-sans d-ink-soft" font-size="10.5">it never calls a server again</text>
+      </g>
+
+      <g opacity="0.75">
+        <rect x="468" y="410" width="192" height="64" rx="10" fill="none" class="d-mute-stroke" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="486" y="434" class="d-mono d-ink-muted" font-size="9" letter-spacing="0.6">COMING</text>
+        <text x="486" y="452" class="d-display d-ink-soft" font-size="14" font-style="italic" font-weight="500">OTA updates</text>
+        <text x="486" y="467" class="d-sans d-ink-muted" font-size="9.5">new topics, no new build</text>
+        <path d="M468,470 C404,492 350,506 304,516" fill="none" class="d-mute-stroke" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#v2-arr-mute)"/>
+      </g>
+    </svg>
+
+    <p class="diagram-note">
+      <strong>Three steps, then silence.</strong> One server at home runs the pipeline
+      and builds the app; the build carries every explainer and image inside it; the App
+      Store hands it to readers. After that the app is on its own — no droplet, no
+      database, no calls home. The dashed box is what's next: over-the-air updates, so
+      fresh topics arrive without a fresh build.
+    </p>
+  </section>
+
   <h2>By the numbers</h2>
   <div class="stat-row">
     <div class="stat">
-      <div class="num">~<em>20</em></div>
+      <div class="num">~<em>40</em></div>
       <div class="label">Hours of focused work</div>
     </div>
     <div class="stat">
-      <div class="num"><em>2</em></div>
+      <div class="num"><em>4</em></div>
       <div class="label">Weekends, start to ship</div>
     </div>
     <div class="stat">
