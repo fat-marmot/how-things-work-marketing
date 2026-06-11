@@ -6,6 +6,8 @@
 <title>About — How {things} Work</title>
 <meta name="description" content="A solo project by Colin Burns. An honest account of building production software with AI as a co-author — what's exciting about it, and what's complicated about it."/>
 <meta name="theme-color" content="#fcf9f4"/>
+<!-- Smart App Banner — Safari on iOS shows a native install/open prompt -->
+<meta name="apple-itunes-app" content="app-id=6767944916"/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="About — How {things} Work"/>
 <meta property="og:description" content="A solo project. An honest account of building production software with AI as a co-author."/>
@@ -167,7 +169,7 @@
   </div>
   <div class="nav-right">
     <span class="free-pill">Free</span>
-    <a href="index.html#download" class="btn btn-ink">Get the app</a>
+    <a href="https://apps.apple.com/app/id6767944916" class="btn btn-ink" target="_blank" rel="noopener">Get the app</a>
   </div>
 </nav>
 
@@ -640,17 +642,20 @@
     monthly cloud bill to fetch a set of files that never changed.
   </p>
   <p>
-    So I took the backend out. The app now carries every explainer and every image inside
-    its own bundle. It runs fully offline — once installed, it never makes a network
-    request. No droplet, no Postgres, no Redis, no CDN. The recurring cost dropped to
-    roughly nothing, and that is the point: I want the app to stay free, and a free app
-    shouldn't quietly cost me money every month to keep running.
+    So I took the content backend out. Every explainer now ships inside the app itself —
+    all the text, baked into the build and read from a local database on the device, so
+    the writing works fully offline. The only thing it fetches over the network is the
+    hero images, which stream from a CDN and cache on the device as you read. There's no
+    analytics and no tracking — nothing reporting your reading back to me. No droplet, no
+    Postgres, no Redis serving content. The recurring cost dropped to roughly nothing, and
+    that is the point: I want the app to stay free, and a free app shouldn't quietly cost
+    me money every month to keep running.
   </p>
   <p>
     The content pipeline didn't go away — it moved. It now runs on a server at home. When
     I want to add topics, I run the pipeline there, it generates the content, and that
-    content gets baked into a new build. The only thing still hosted is the CI/CD that
-    produces the build itself.
+    content gets baked into a new build. The only things still hosted are the CI/CD that
+    produces the build and a CDN that serves the images.
   </p>
   <p>
     Next on the list is over-the-air updates, so new topics can reach readers without a
@@ -660,11 +665,11 @@
   <section class="diagram-block">
     <div class="diagram-label">
       <span class="diagram-num">How version 2 runs</span>
-      <span class="diagram-name">Everything ships inside the app</span>
+      <span class="diagram-name">The writing ships inside the app</span>
     </div>
 
     <svg class="diagram-svg" viewBox="0 0 720 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v2-title">
-      <title id="v2-title">Version 2 architecture: a home server builds the app, the App Store delivers it, and readers run it fully offline</title>
+      <title id="v2-title">Version 2 architecture: a home server builds the app, the App Store delivers it, and readers read offline while images stream from a CDN</title>
       <defs>
         <marker id="v2-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M0,0 L10,5 L0,10 z" fill="#5a5a55"/>
@@ -677,7 +682,7 @@
         </marker>
       </defs>
 
-      <text x="360" y="34" text-anchor="middle" class="d-display d-ink-soft" font-size="15" font-style="italic" font-weight="500">one server builds it — then the app is on its own.</text>
+      <text x="360" y="34" text-anchor="middle" class="d-display d-ink-soft" font-size="15" font-style="italic" font-weight="500">one server builds it — then no server runs it.</text>
 
       <rect x="90" y="58" width="540" height="180" rx="18" class="d-card" opacity="0.55"/>
       <text x="112" y="86" class="d-mono d-ink-muted" font-size="10.5" letter-spacing="1.6">HOME · ONE SELF-HOSTED SERVER</text>
@@ -705,7 +710,7 @@
       <rect x="234" y="278" width="252" height="86" rx="14" class="d-card-warm d-soft-shadow"/>
       <text x="360" y="304" text-anchor="middle" class="d-mono d-green" font-size="10" letter-spacing="1.6" font-weight="500">THE BUILD</text>
       <text x="360" y="330" text-anchor="middle" class="d-display d-green" font-size="21" font-style="italic" font-weight="500">Self-contained app</text>
-      <text x="360" y="350" text-anchor="middle" class="d-sans d-ink-soft" font-size="11">every explainer &amp; image baked inside</text>
+      <text x="360" y="350" text-anchor="middle" class="d-sans d-ink-soft" font-size="11">every explainer baked in · images stream</text>
 
       <path d="M360,364 C360,382 360,392 360,402" fill="none" class="d-soft-stroke" stroke-width="1.4" marker-end="url(#v2-arr)"/>
 
@@ -721,8 +726,8 @@
         <rect width="46" height="62" rx="8" fill="none" class="d-ink-stroke" stroke-width="1.6"/>
         <line x1="18" y1="52" x2="28" y2="52" class="d-ink-stroke" stroke-width="1.6" stroke-linecap="round"/>
         <text x="66" y="22" class="d-display d-ink" font-size="16" font-style="italic" font-weight="500">readers</text>
-        <text x="66" y="40" class="d-sans d-ink-soft" font-size="10.5">the app works fully offline —</text>
-        <text x="66" y="55" class="d-sans d-ink-soft" font-size="10.5">it never calls a server again</text>
+        <text x="66" y="40" class="d-sans d-ink-soft" font-size="10.5">the writing reads fully offline —</text>
+        <text x="66" y="55" class="d-sans d-ink-soft" font-size="10.5">images stream from a CDN as you go</text>
       </g>
 
       <g opacity="0.75">
@@ -735,11 +740,12 @@
     </svg>
 
     <p class="diagram-note">
-      <strong>Three steps, then silence.</strong> One server at home runs the pipeline
-      and builds the app; the build carries every explainer and image inside it; the App
-      Store hands it to readers. After that the app is on its own — no droplet, no
-      database, no calls home. The dashed box is what's next: over-the-air updates, so
-      fresh topics arrive without a fresh build.
+      <strong>Three steps, then it's the reader's.</strong> One server at home runs the
+      pipeline and builds the app; the build carries every explainer inside it; the App
+      Store hands it to readers. After that the writing reads offline — the only thing the
+      app fetches is the hero images, which stream from a CDN and cache as you go. No
+      analytics, no tracking, nothing reporting back. The dashed box is what's next:
+      over-the-air updates, so fresh topics could arrive without a fresh build.
     </p>
   </section>
 
